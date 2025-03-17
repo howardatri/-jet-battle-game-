@@ -2,7 +2,11 @@
 #define GAME_H
 
 #include "Scene.h"
-#include "SDL.h"
+#include "Object.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <string>
 
 class Game
 {
@@ -22,6 +26,12 @@ public:
     void update(float deltaTime);
     void render();
 
+    // 渲染文字函数
+    void renderTextCentered(std::string text, float posY, bool isTitle);
+
+    // setters
+
+    // getters
     SDL_Window* getWindow() { return window; }
     SDL_Renderer* getRenderer() { return renderer; }
     int getWindowWidth() { return windowWidth; }
@@ -32,6 +42,9 @@ private:
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
 
+    TTF_Font* titleFont;
+    TTF_Font* textFont;
+
     bool isRunning = true;
     Scene* currentScene = nullptr;
     SDL_Window* window = nullptr;
@@ -41,6 +54,12 @@ private:
     int FPS = 60;
     Uint32 frameTime;
     float deltaTime;
+
+    Background nearStars;
+    Background farStars;
+
+    void backgroundUpdate(float deltaTime);
+    void renderBackground();
 };
 
 #endif
